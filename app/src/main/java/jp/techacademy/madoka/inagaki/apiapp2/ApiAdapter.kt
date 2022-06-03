@@ -22,7 +22,7 @@ class ApiAdapter(private val context: Context): RecyclerView.Adapter<RecyclerVie
     var onClickDeleteFavorite: ((Shop) -> Unit)? = null
 
     // Itemを押したときのメソッド
-    var onClickItem: ((String) -> Unit)? = null
+    var onClickItem: ((FavoriteShop) -> Unit)? = null
 
     fun refresh(list: List<Shop>) {
         update(list, false)
@@ -35,7 +35,7 @@ class ApiAdapter(private val context: Context): RecyclerView.Adapter<RecyclerVie
     // 表示リスト更新時に呼び出すメソッド
     fun update(list: List<Shop>, isAdd: Boolean) {
         items.apply {
-            if(!isAdd){ // 追加のときは、Clearしない
+            if (!isAdd) { // 追加のときは、Clearしない
                 clear() // items を 空にする
             }
             addAll(list) // itemsにlistを全て追加する
@@ -54,6 +54,8 @@ class ApiAdapter(private val context: Context): RecyclerView.Adapter<RecyclerVie
         val rootView : ConstraintLayout = view.findViewById(R.id.rootView)
         // レイアウトファイルからidがnameTextViewのCTextViewオブジェクトを取得し、代入
         val nameTextView: TextView = view.findViewById(R.id.nameTextView)
+        // レイアウトファイルからidがaddressTextViewのCTextViewオブジェクトを取得し、代入
+        val addressTextView: TextView = view.findViewById(R.id.addressTextView)
         // レイアウトファイルからidがimageViewのImageViewオブジェクトを取得し、代入
         val imageView: ImageView = view.findViewById(R.id.imageView)
         // レイアウトファイルからidがfavoriteImageViewのImageViewオブジェクトを取得し、代入
@@ -90,9 +92,10 @@ class ApiAdapter(private val context: Context): RecyclerView.Adapter<RecyclerVie
             }
             // nameTextViewのtextプロパティに代入されたオブジェクトのnameプロパティを代入
             nameTextView.text = data.name
+            addressTextView.text = data.address
             // Picassoライブラリを使い、imageViewにdata.logoImageのurlの画像を読み込ませる
             Picasso.get().load(data.logoImage).into(imageView)
-            // 白抜きの星マークの画像を指定
+            // 白抜きの星マークの画像を指定a
             favoriteImageView.apply {
                 setImageResource(if (isFavorite) R.drawable.ic_star else R.drawable.ic_star_border) // Picassoというライブラリを使ってImageVIewに画像をはめ込む
                 setOnClickListener {
