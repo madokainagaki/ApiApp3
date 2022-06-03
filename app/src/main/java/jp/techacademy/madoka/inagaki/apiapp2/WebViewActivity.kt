@@ -23,11 +23,11 @@ class WebViewActivity: AppCompatActivity() {
 
     companion object {
         private const val KEY_URL = "key_url"
-        fun start(activity: Activity, url: FavoriteShop) {
+        fun start(activity: Activity, url: String) {
             activity.startActivity(
                 Intent(activity, WebViewActivity::class.java).putExtra(
                     KEY_URL,
-                    FavoriteShop
+                    url
                 )
             )
         }

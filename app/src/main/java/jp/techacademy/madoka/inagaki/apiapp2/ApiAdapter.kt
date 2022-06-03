@@ -22,7 +22,7 @@ class ApiAdapter(private val context: Context): RecyclerView.Adapter<RecyclerVie
     var onClickDeleteFavorite: ((Shop) -> Unit)? = null
 
     // Itemを押したときのメソッド
-    var onClickItem: ((FavoriteShop) -> Unit)? = null
+    var onClickItem: ((String) -> Unit)? = null
 
     fun refresh(list: List<Shop>) {
         update(list, false)
