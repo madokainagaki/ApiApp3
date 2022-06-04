@@ -1,5 +1,6 @@
 package jp.techacademy.madoka.inagaki.apiapp2
 
+import android.util.Log
 import io.realm.Realm
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
@@ -9,6 +10,7 @@ open class FavoriteShop: RealmObject() {
     var id: String = ""
     var imageUrl: String = ""
     var name: String = ""
+    var address: String = ""
     var url: String = ""
 
     companion object {

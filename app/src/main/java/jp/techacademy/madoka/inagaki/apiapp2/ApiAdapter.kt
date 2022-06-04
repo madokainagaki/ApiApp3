@@ -8,6 +8,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
+import androidx.core.view.isNotEmpty
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 
@@ -22,7 +23,7 @@ class ApiAdapter(private val context: Context): RecyclerView.Adapter<RecyclerVie
     var onClickDeleteFavorite: ((Shop) -> Unit)? = null
 
     // Itemを押したときのメソッド
-    var onClickItem: ((String) -> Unit)? = null
+    var onClickItem: ((FavoriteShop) -> Unit)? = null
 
     fun refresh(list: List<Shop>) {
         update(list, false)
@@ -87,7 +88,16 @@ class ApiAdapter(private val context: Context): RecyclerView.Adapter<RecyclerVie
                 setBackgroundColor(ContextCompat.getColor(context,
                     if (position % 2 == 0) android.R.color.white else android.R.color.darker_gray))
                 setOnClickListener {
-                    onClickItem?.invoke(if (data.couponUrls.sp.isNotEmpty()) data.couponUrls.sp else data.couponUrls.pc)
+                    val favoriteshop = FavoriteShop()
+//                    全部乗せ
+//dataを使用してShop型で　favoriteShopをインスタンス化する
+                    favoriteshop.id=data.id
+                    favoriteshop.name=data.name
+                    favoriteshop.address=data.address
+                    favoriteshop.imageUrl=data.logoImage
+                    favoriteshop.url=if(data.couponUrls.sp.isNotEmpty()) data.couponUrls.sp else data.couponUrls.pc
+
+                    onClickItem?.invoke(favoriteshop)
                 }
             }
             // nameTextViewのtextプロパティに代入されたオブジェクトのnameプロパティを代入
@@ -110,3 +120,4 @@ class ApiAdapter(private val context: Context): RecyclerView.Adapter<RecyclerVie
         }
     }
 }
+

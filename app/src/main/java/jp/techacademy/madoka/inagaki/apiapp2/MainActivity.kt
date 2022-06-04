@@ -14,7 +14,7 @@ class MainActivity : AppCompatActivity(), FragmentCallback {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
+        
         // ViewPager2の初期化
         viewPager2.apply {
             adapter = viewPagerAdapter
@@ -30,14 +30,15 @@ class MainActivity : AppCompatActivity(), FragmentCallback {
         }.attach()
     }
 
-    override fun onClickItem(url: String) {
-        WebViewActivity.start(this, url)
+    override fun onClickItem(favoriteShop: FavoriteShop) {
+        WebViewActivity.start(this, favoriteShop)
     }
 
     override fun onAddFavorite(shop: Shop) { // Favoriteに追加するときのメソッド(Fragment -> Activity へ通知する)
         FavoriteShop.insert(FavoriteShop().apply {
             id = shop.id
             name = shop.name
+            address = shop.address
             imageUrl = shop.logoImage
             url = if (shop.couponUrls.sp.isNotEmpty()) shop.couponUrls.sp else shop.couponUrls.pc
         })
@@ -67,6 +68,7 @@ class MainActivity : AppCompatActivity(), FragmentCallback {
     }
 
     companion object {
+
         private const val VIEW_PAGER_POSITION_API = 0
         private const val VIEW_PAGER_POSITION_FAVORITE = 1
     }
